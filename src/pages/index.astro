@@ -44,16 +44,15 @@ import '../styles/_module.css';
 </Layout>
 
 |<script>
+    import { navigate } from "astro:transitions/client";
+
     const widget = document.getElementById("upload-widget");
     
     if(widget){
-        widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ detail: object }>) => {
+        widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
             console.log('clduploadwidget:success', e.detail);
-            // {
-            //  event: '<Event>',
-            //  info: '<Cloudinary Resource>',
-            //  UploadWidget // Widget Instance,
-            // }
+            const PUBLIC_ID = e.detail.info.public_id;
+            navigate(`/photo?id=${PUBLIC_ID}`);
         }) as EventListener);
     }
 </script>

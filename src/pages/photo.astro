@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {getCldImageUrl} from "astro-cloudinary/helpers";
+import '../styles/_base.css';
+import '../styles/_layout.css';
+import '../styles/_module.css';
+
+const { searchParams } = Astro.url;
+const id = searchParams.get('id');
+
+if(id == null) return Astro.redirect('/');
+
+const url = getCldImageUrl({ src: id });
+---
+
+<Layout title="Foto">
+
+    <main class="container image-viewer">
+        <header>
+            <h1>Imagen subida</h1>
+        </header>
+        <section>
+            <img class="img-cloudinary" src={url} alt="Imagen cloudinary">
+        </section>
+        <footer>
+            <small>{url}</small>
+        </footer>
+    </main>
+
+</Layout>
