@@ -1,9 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { CldUploadWidget } from 'astro-cloudinary';
+import { CldUploadWidget, CldImage } from 'astro-cloudinary';
+import { getCollection } from 'astro:content';
+
 import '../styles/_base.css';
 import '../styles/_layout.css';
 import '../styles/_module.css';
+
+const images = await getCollection('images');
 ---
 
 <Layout title="Cloudinary Astro Test">
@@ -36,6 +40,25 @@ import '../styles/_module.css';
             >
                 <button>Subir imagen</button>
             </CldUploadWidget>
+            <ul>
+                {images.map((image) =>{
+                    return (
+                        <li>
+                            <a href={`/photo?id=${image.data.public_id}`}>
+                                <CldImage
+                                    src={image.data.public_id}
+                                    height={image.data.height}
+                                    width={image.data.width}
+                                    crop={{
+                                        type: 'fill',
+                                        source: true,
+                                    }}
+                                />
+                            </a>
+                        </li>
+                    )
+                })}
+            </ul>
         </section>
         <footer>
 
