@@ -1,0 +1,31 @@
+:root{
+    --font-h1-color: #F45D01;
+    --btn-bg: #EEB902;
+}
+
+main.base-page{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+
+    & header{
+        padding: 1rem;
+
+        & h1{
+            text-align: center;
+            color: var(--font-h1-color);
+        }
+    }
+
+    & section{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & button{
+            padding: 1rem;
+            background-color: var(--btn-bg);
+            border-radius: .25rem;
+        }
+    }
+}

@@ -3,15 +3,57 @@ import Layout from '../layouts/Layout.astro';
 import { CldUploadWidget } from 'astro-cloudinary';
 import '../styles/_base.css';
 import '../styles/_layout.css';
+import '../styles/_module.css';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main class="container">
-        <CldUploadWidget uploadPreset='upload-unsigned-images'>
-            <button>upload</button>
-        </CldUploadWidget>
+<Layout title="Cloudinary Astro Test">
+	<main class="container base-page">
+        <header>
+            <h1>Cloudinary Astro Test</h1>
+        </header>
+        <section>
+            <CldUploadWidget 
+                uploadPreset='upload-unsigned-images'
+                id='upload-widget'
+                options={{
+                    sources: ["local"],
+                    multiple: false,
+                    maxFiles: 1,
+                    language: "es",
+                    text: {
+                        es:{
+                            or: 'O',
+                            menu:{
+                                "files": "Subir edsde tu dispositivo"
+                            },
+                            local:{
+                                "browse": "Seleccionar",
+                                "dd_title_single":"Arrastra tu imagen aquí",
+                            },
+                        }
+                    }
+                }}
+            >
+                <button>Subir imagen</button>
+            </CldUploadWidget>
+        </section>
+        <footer>
+
+        </footer>
     </main>
 </Layout>
 
-<style>
-</style>
+|<script>
+    const widget = document.getElementById("upload-widget");
+    
+    if(widget){
+        widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ detail: object }>) => {
+            console.log('clduploadwidget:success', e.detail);
+            // {
+            //  event: '<Event>',
+            //  info: '<Cloudinary Resource>',
+            //  UploadWidget // Widget Instance,
+            // }
+        }) as EventListener);
+    }
+</script>
