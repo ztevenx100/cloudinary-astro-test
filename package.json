@@ -10,8 +10,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.16.5",
     "@astrojs/check": "^0.9.4",
+    "astro": "^4.16.5",
+    "astro-cloudinary": "^1.1.2",
+    "two-up-element": "^1.0.1",
     "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
   }
 }

@@ -1,12 +1,81 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CldUploadWidget, CldImage } from 'astro-cloudinary';
+import { getCollection } from 'astro:content';
+
+import '../styles/_base.css';
+import '../styles/_layout.css';
+import '../styles/_module.css';
+
+const images = await getCollection('images');
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-        
+<Layout title="Cloudinary Astro Test">
+	<main class="container base-page">
+        <header>
+            <h1>Cloudinary Astro Test</h1>
+        </header>
+        <section>
+            <CldUploadWidget 
+                uploadPreset='upload-unsigned-images'
+                id='upload-widget'
+                options={{
+                    sources: ["local"],
+                    multiple: false,
+                    maxFiles: 1,
+                    language: "es",
+                    text: {
+                        es:{
+                            or: 'O',
+                            menu:{
+                                "files": "Subir edsde tu dispositivo"
+                            },
+                            local:{
+                                "browse": "Seleccionar",
+                                "dd_title_single":"Arrastra tu imagen aquí",
+                            },
+                        }
+                    }
+                }}
+            >
+                <button>Subir imagen</button>
+            </CldUploadWidget>
+            <ul>
+                {images.map((image) =>{
+                    return (
+                        <li>
+                            <a href={`/photo?id=${image.data.public_id}`}>
+                                <CldImage
+                                    src={image.data.public_id}
+                                    height={image.data.height}
+                                    width={image.data.width}
+                                    crop={{
+                                        type: 'fill',
+                                        source: true,
+                                    }}
+                                />
+                            </a>
+                        </li>
+                    )
+                })}
+            </ul>
+        </section>
+        <footer>
+
+        </footer>
     </main>
 </Layout>
 
-<style>
-</style>
+|<script>
+    import { navigate } from "astro:transitions/client";
+
+    const widget = document.getElementById("upload-widget");
+    
+    if(widget){
+        widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
+            console.log('clduploadwidget:success', e.detail);
+            const PUBLIC_ID = e.detail.info.public_id;
+            navigate(`/photo?id=${PUBLIC_ID}`);
+        }) as EventListener);
+    }
+</script>
