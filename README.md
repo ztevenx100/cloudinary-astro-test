@@ -1,3 +1,7 @@
 # Cloudinary Astro Test
 
-Prueba del api de cloudinary para generar imagenes con tematica de halloween.
+Prueba del API de cloudinary para generar imagenes con tematica de halloween.
+- Uso del API para generar ediciones de imagen con las herramientas de Cloudinary
+
+
+- por corregir
