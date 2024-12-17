@@ -1,0 +1,16 @@
+---
+export interface Props {
+  year?: number;
+  text?: string;
+}
+
+import '../styles/_base.css';
+import '../styles/_layout.css';
+import '../styles/_module.css';
+
+const { year = new Date().getFullYear(), text = "Todos los derechos reservados" } = Astro.props;
+---
+
+<footer class="site-footer">
+  <p>&copy; {year} {text}</p>
+</footer>

@@ -16,35 +16,37 @@ const images = await getCollection('images');
             <h1>Cloudinary Astro Test</h1>
         </header>
         <section>
-            <CldUploadWidget 
-                uploadPreset='upload-unsigned-images'
-                id='upload-widget'
-                options={{
-                    sources: ["local"],
-                    multiple: false,
-                    maxFiles: 1,
-                    language: "es",
-                    text: {
-                        es:{
-                            or: 'O',
-                            menu:{
-                                "files": "Subir edsde tu dispositivo"
-                            },
-                            local:{
-                                "browse": "Seleccionar",
-                                "dd_title_single":"Arrastra tu imagen aquí",
-                            },
+            <div class="upload-container">
+                <CldUploadWidget 
+                    uploadPreset='upload-unsigned-images'
+                    id='upload-widget'
+                    options={{
+                        sources: ["local"],
+                        multiple: false,
+                        maxFiles: 1,
+                        language: "es",
+                        text: {
+                            es:{
+                                or: 'O',
+                                menu:{
+                                    "files": "Subir desde tu dispositivo"
+                                },
+                                local:{
+                                    "browse": "Seleccionar",
+                                    "dd_title_single":"Arrastra tu imagen aquí",
+                                },
+                            }
                         }
-                    }
-                }}
-            >
-                <button>Subir imagen</button>
-            </CldUploadWidget>
-            <ul>
-                {images.map((image) =>{
+                    }}
+                >
+                    <button class="btn-upload">Subir imagen</button>
+                </CldUploadWidget>
+            </div>
+            <ul class="image-list">
+                {images.map((image: { data: { public_id: string; height: number; width: number } }) =>{
                     return (
-                        <li>
-                            <a href={`/photo?id=${image.data.public_id}`}>
+                        <li class="image-item" >
+                            <a href={`/photo?id=${image.data.public_id}`} class="image-link">
                                 <CldImage
                                     src={image.data.public_id}
                                     height={image.data.height}
@@ -55,27 +57,34 @@ const images = await getCollection('images');
                                     }}
                                 />
                             </a>
+                            <div class="image-title">Título de la imagen</div>
                         </li>
                     )
                 })}
             </ul>
         </section>
-        <footer>
-
-        </footer>
     </main>
 </Layout>
 
-|<script>
+<script>
     import { navigate } from "astro:transitions/client";
 
-    const widget = document.getElementById("upload-widget");
-    
-    if(widget){
-        widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
-            console.log('clduploadwidget:success', e.detail);
-            const PUBLIC_ID = e.detail.info.public_id;
-            navigate(`/photo?id=${PUBLIC_ID}`);
-        }) as EventListener);
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const widget = document.getElementById('upload-widget');
+        
+        if (widget) {
+            widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
+                const PUBLIC_ID = e.detail.info?.public_id;
+
+                if (PUBLIC_ID) {
+                    console.log('Upload successful: ', PUBLIC_ID);
+                    navigate(`/photo?id=${PUBLIC_ID}`);
+                } else {
+                    console.error('Upload failed: No public_id received.');
+                }
+            }) as EventListener);
+        } else {
+            console.error('Upload widget not found.');
+        }
+    });
 </script>
