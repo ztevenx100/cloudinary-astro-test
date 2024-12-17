@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import {getCldImageUrl} from "astro-cloudinary/helpers";
+import BackToHomeButton from '../components/BackToHomeButton.astro';
+
 import '../styles/_base.css';
 import '../styles/_layout.css';
 import '../styles/_module.css';
@@ -15,61 +17,65 @@ const url = getCldImageUrl({ src: id });
 
 <Layout title="Foto">
 
-    <main class="container image-container" data-id={id} >
-        <header>
-            <h1>Imagen subida</h1>
-        </header>
-        <section class="image-viewer">
+    <main class="container " data-id={id} >
+        
+        <BackToHomeButton />
+        <article class="image-container">
             <header>
-                <h2>Selecciona el tema</h2>
+                <h1>Imagen subida</h1>
             </header>
-            <menu>
-                <button 
-                    type="button"
-                    class="add"
-                    data-topic="ghost"
-                >
-                    Fantasmas
-                </button>
-                <button 
-                    type="button"
-                    class="add"
-                    data-topic="zombie"
-                >
-                    Zombies
-                </button>
-                <button 
-                    type="button"
-                    class="add"
-                    data-topic="devil"
-                >
-                    Diablo
-                </button>
-            </menu>
-            <div class="img-cloudinary" >
-                <two-up>
-                    <img 
-                        id="img-original" 
-                        src={url} 
-                        alt="Imagen cloudinary"
+            <section class="image-viewer">
+                <header>
+                    <h2 class="section-title">Selecciona el tema</h2>
+                </header>
+                <menu class="theme-buttons">
+                    <button 
+                        type="button"
+                        class="btn-topic"
+                        data-topic="ghost"
                     >
-                    <img 
-                        id="img-preview" 
-                        src={url} 
-                        alt="Imagen cloudinary"
+                        Fantasmas
+                    </button>
+                    <button 
+                        type="button"
+                        class="btn-topic"
+                        data-topic="zombie"
                     >
-                </two-up>
-            </div>
-        </section>
-        <footer>
-            <small>{url}</small>
-            <button 
-                type="button"
-                class="btn-download"
-            >
-                Descargar
-            </button>
-        </footer>
+                        Zombies
+                    </button>
+                    <button 
+                        type="button"
+                        class="btn-topic"
+                        data-topic="devil"
+                    >
+                        Diablo
+                    </button>
+                </menu>
+                <div class="img-cloudinary" >
+                    <two-up>
+                        <img 
+                            id="img-original" 
+                            src={url} 
+                            alt="Imagen cloudinary"
+                        >
+                        <img 
+                            id="img-preview" 
+                            src={url} 
+                            alt="Imagen cloudinary"
+                        >
+                    </two-up>
+                </div>
+                <footer>
+                    <small>{url}</small>
+                    <button 
+                        type="button"
+                        class="btn-download"
+                    >
+                        Descargar
+                    </button>
+                </footer>
+            </section>
+        </article>
     </main>
 
 </Layout>
@@ -104,7 +110,7 @@ const url = getCldImageUrl({ src: id });
         imagePreview.onload = () => {
             imagePreview.style.opacity = '1';
         }
-    })
+    });
 
     btnDownload.addEventListener("click", (e) =>{
         const url = getCldImageUrl({
@@ -116,6 +122,6 @@ const url = getCldImageUrl({ src: id });
         a.href = url;
         a.download = "image.avif";
         a.click();
-    })
+    });
 
 </script>

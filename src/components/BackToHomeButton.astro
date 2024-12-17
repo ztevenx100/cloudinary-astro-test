@@ -1,0 +1,22 @@
+---
+import '../styles/_base.css';
+import '../styles/_layout.css';
+import '../styles/_module.css';
+---
+
+<nav class="btn-back-to-home">
+    <button type="button" id="btnHome" >
+        Inicio
+    </button>
+</nav>
+
+<script>
+    import { navigate } from "astro:transitions/client";
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnGoHome = document.getElementById('btnHome');
+        if (btnGoHome) {
+            btnGoHome.onclick = () => navigate(`/`);
+        }
+    });
+</script>
