@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import {getCldImageUrl} from "astro-cloudinary/helpers";
 import BackToHomeButton from '../components/BackToHomeButton.astro';
+import Button from '../components/Button.astro';
 
 import '../styles/_base.css';
 import '../styles/_layout.css';
@@ -29,27 +30,26 @@ const url = getCldImageUrl({ src: id });
                     <h2 class="section-title">Selecciona el tema</h2>
                 </header>
                 <menu class="theme-buttons">
-                    <button 
-                        type="button"
+                    <Button
                         class="btn-topic"
+                        label="Fantasmas"
                         data-topic="ghost"
-                    >
-                        Fantasmas
-                    </button>
-                    <button 
-                        type="button"
+                    />
+                    <Button
                         class="btn-topic"
+                        label="Zombies"
                         data-topic="zombie"
-                    >
-                        Zombies
-                    </button>
-                    <button 
-                        type="button"
+                    />
+                    <Button
                         class="btn-topic"
+                        label="Diablo"
                         data-topic="devil"
-                    >
-                        Diablo
-                    </button>
+                    />
+                    <Button
+                        class="btn-topic"
+                        label="Esqueletos"
+                        data-topic="skeleton"
+                    />
                 </menu>
                 <div class="img-cloudinary" >
                     <two-up>
@@ -67,12 +67,10 @@ const url = getCldImageUrl({ src: id });
                 </div>
                 <footer>
                     <small>{url}</small>
-                    <button 
-                        type="button"
+                    <Button
                         class="btn-download"
-                    >
-                        Descargar
-                    </button>
+                        label="Descargar"
+                    />
                 </footer>
             </section>
         </article>

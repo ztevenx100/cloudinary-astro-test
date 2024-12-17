@@ -43,7 +43,7 @@ const images = await getCollection('images');
                 </CldUploadWidget>
             </div>
             <ul class="image-list">
-                {images.map((image) =>{
+                {images.map((image: { data: { public_id: string; height: number; width: number } }) =>{
                     return (
                         <li class="image-item" >
                             <a href={`/photo?id=${image.data.public_id}`} class="image-link">
@@ -69,19 +69,9 @@ const images = await getCollection('images');
 <script>
     import { navigate } from "astro:transitions/client";
 
-    //const widget = document.getElementById("upload-widget");
-    
-    /*if(widget){
-        widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
-            console.log('clduploadwidget:success', e.detail);
-            const PUBLIC_ID = e.detail.info.public_id;
-            navigate(`/photo?id=${PUBLIC_ID}`);
-        }) as EventListener);
-    }*/
-
     document.addEventListener('DOMContentLoaded', () => {
         const widget = document.getElementById('upload-widget');
-
+        
         if (widget) {
             widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
                 const PUBLIC_ID = e.detail.info?.public_id;

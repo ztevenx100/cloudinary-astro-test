@@ -1,0 +1,17 @@
+---
+export interface Props {
+  size?: number;
+  class?: string;
+  label?: string;
+  [key: string]: any;
+}
+
+const { size = 24, class: className, label: labelText, ...attributes} = Astro.props;
+---
+<button 
+    type="button"
+    class={className}
+    {...attributes}
+>
+    {labelText}
+</button>

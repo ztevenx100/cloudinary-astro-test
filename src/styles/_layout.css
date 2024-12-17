@@ -4,6 +4,11 @@
     --max-w-lg: 1024px;
     --max-w-xl: 1280px;
     --max-w-2xl: 1536px;
+
+    --btn-bg: #EEB902;
+    --btn-bg-hover: #f0ce59;
+    --btn-color: #fff;
+    --btn-font-size: 1rem;
 }
 
 .container{
@@ -33,4 +38,21 @@
 
 .min-h-screen{
     min-height: 100dvh;
+}
+
+button.btn{
+    padding: 1rem;
+    background-color: var(--btn-bg);
+    color: var(--btn-color);
+    font-size: var(--btn-font-size);
+    border-radius: .25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+        background-color: var(--btn-bg-hover);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-3px);
+    }
 }
